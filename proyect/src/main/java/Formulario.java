@@ -1,48 +1,63 @@
 import java.io.*;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.DefaultListModel;
 import java.util.Calendar;
 import java.util.Date;
+import java.io.FileWriter;
+import javax.swing.ButtonModel;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author NOEL
  */
-
 public class Formulario extends javax.swing.JFrame {
+
+    private static double preciocarro;
 
     /**
      * Creates new form Formulario
      */
-    private final String ruta=System.getProperties().getProperty("user.dir");
+    private final String ruta = System.getProperties().getProperty("user.dir");
     public Formulario() {
         initComponents();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();  
+        File archivocarro = new File("CARRITO.txt");
+        archivocarro.delete();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         fechahora.setText(dtf.format(now));
-        File doc=null;
-        FileReader FileR= null;
-        BufferedReader BufferedR=null;
-        try{
-            doc=new File(ruta+"//documento.txt");
-            FileR=new FileReader(doc);
-            BufferedR=new BufferedReader(FileR);
+        File doc = null;
+        FileReader FileR = null;
+        BufferedReader BufferedR = null;
+        try {
+            doc = new File(ruta + "//documento.txt");
+            FileR = new FileReader(doc);
+            BufferedR = new BufferedReader(FileR);
             String informacion;
-            DefaultListModel lista=new DefaultListModel();
+            DefaultListModel lista = new DefaultListModel();
             //lista.addElement("Mostrar datos de archivo");
-            while((informacion=BufferedR.readLine())!=null){
-        System.out.println(informacion);
-        lista.addElement(informacion);
-        }
+            while ((informacion = BufferedR.readLine()) != null) {
+                System.out.println(informacion);
+                lista.addElement(informacion);
+            }
             listadatos.setModel(lista);
-        }catch(Exception e){}finally{try{if(null!=FileR){FileR.close();}}catch(IOException e2){}{
-        }
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (null != FileR) {
+                    FileR.close();
+                }
+            } catch (IOException e2) {
+            }
+            {
+            }
         }
     }
 
@@ -77,11 +92,32 @@ public class Formulario extends javax.swing.JFrame {
         precioiva = new javax.swing.JTextField();
         rbmenoreo = new javax.swing.JRadioButton();
         rbmayoreo = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cant = new javax.swing.JTextField();
+        cansel = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        medidor = new javax.swing.JLabel();
         materia_prima = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        metros = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        preciom = new javax.swing.JLabel();
+        ajam = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        fechahora = new javax.swing.JLabel();
+        fechahora = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Fiñax");
+        setResizable(false);
 
         puntodeventa.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -177,21 +213,52 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Precio unitario+iVA");
+        jLabel6.setText("Precio + iVA:");
 
         precioiva.setEditable(false);
         precioiva.setRequestFocusEnabled(false);
 
         bgrupomm.add(rbmenoreo);
         rbmenoreo.setText("Compraré en Menoreo");
-        rbmenoreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbmenoreoActionPerformed(evt);
-            }
-        });
 
         bgrupomm.add(rbmayoreo);
         rbmayoreo.setText("Compraré en Mayoreo");
+
+        jLabel7.setText("Seleccione la cantidad:");
+
+        jLabel8.setText("Precio por cantidad seleccionada:");
+
+        cansel.setEditable(false);
+        cansel.setRequestFocusEnabled(false);
+        cansel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                canselActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Comprar Materia Prima");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Añadir al Carrito");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Finalizar Compra");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        medidor.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        medidor.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout punto_ventaLayout = new javax.swing.GroupLayout(punto_venta);
         punto_venta.setLayout(punto_ventaLayout);
@@ -199,72 +266,207 @@ public class Formulario extends javax.swing.JFrame {
             punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(punto_ventaLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addGroup(punto_ventaLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(cant, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(punto_ventaLayout.createSequentialGroup()
                         .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbmenoreo)
+                            .addComponent(rbmayoreo))
+                        .addGap(226, 226, 226)
+                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(preciovalor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(precioiva, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 112, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(punto_ventaLayout.createSequentialGroup()
-                .addGap(269, 269, 269)
-                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(rbmayoreo)
-                    .addComponent(rbmenoreo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(precioiva, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(cansel, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(preciovalor)))
+                    .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(punto_ventaLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, punto_ventaLayout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, punto_ventaLayout.createSequentialGroup()
+                            .addComponent(medidor, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton1)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton3)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton4))))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         punto_ventaLayout.setVerticalGroup(
             punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(punto_ventaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, punto_ventaLayout.createSequentialGroup()
+                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(punto_ventaLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel4))
+                    .addComponent(jButton2))
+                .addGap(6, 6, 6)
+                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbmenoreo)
+                    .addComponent(preciovalor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(0, 0, 0)
+                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(punto_ventaLayout.createSequentialGroup()
+                        .addComponent(rbmayoreo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(cant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(punto_ventaLayout.createSequentialGroup()
+                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cansel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(3, 3, 3)
+                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(precioiva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))))
                 .addGap(18, 18, 18)
-                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel5)
-                    .addComponent(preciovalor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(precioiva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbmenoreo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbmayoreo)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(punto_ventaLayout.createSequentialGroup()
+                        .addGap(0, 13, Short.MAX_VALUE)
+                        .addGroup(punto_ventaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4)
+                            .addComponent(jButton3)
+                            .addComponent(jButton1)))
+                    .addComponent(medidor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         puntodeventa.addTab("Punto de Venta", punto_venta);
+
+        jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel9.setText("Materia Prima");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("El metro tiene un valor monetario de: $68.00");
+
+        jButton5.setText("Punto de Venta");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        metros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                metrosActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("NOTA: Se vende por metro");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Ingrese los metros que desea llevar:");
+
+        jButton6.setText("Elegir esta cantidad");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Añadir al Carrito");
+
+        jButton8.setText("Finalizar Compra");
+
+        preciom.setFont(new java.awt.Font("Century Gothic", 1, 40)); // NOI18N
+
+        ajam.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout materia_primaLayout = new javax.swing.GroupLayout(materia_prima);
         materia_prima.setLayout(materia_primaLayout);
         materia_primaLayout.setHorizontalGroup(
             materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 713, Short.MAX_VALUE)
+            .addGroup(materia_primaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(70, 70, 70))
+            .addGroup(materia_primaLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(materia_primaLayout.createSequentialGroup()
+                        .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(materia_primaLayout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(metros, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(materia_primaLayout.createSequentialGroup()
+                        .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(materia_primaLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton7)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8))
+                            .addGroup(materia_primaLayout.createSequentialGroup()
+                                .addComponent(ajam, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(preciom, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(25, 25, 25))))
         );
         materia_primaLayout.setVerticalGroup(
             materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGroup(materia_primaLayout.createSequentialGroup()
+                .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(materia_primaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9))
+                    .addComponent(jButton5))
+                .addGap(47, 47, 47)
+                .addComponent(jLabel10)
+                .addGap(47, 47, 47)
+                .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(metros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
+                .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(preciom, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ajam, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGroup(materia_primaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7)
+                    .addComponent(jButton8))
+                .addGap(22, 22, 22))
         );
 
         puntodeventa.addTab("Materia Prima", materia_prima);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGEN/LOGO.png"))); // NOI18N
+
+        fechahora.setBorderPainted(false);
+        fechahora.setContentAreaFilled(false);
+        fechahora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechahoraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,8 +477,8 @@ public class Formulario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fechahora, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addComponent(fechahora, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,121 +495,291 @@ public class Formulario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iraproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iraproductosActionPerformed
-punto_venta = new javax.swing.JPanel();
-puntodeventa.setSelectedIndex(1);
+        punto_venta = new javax.swing.JPanel();
+        puntodeventa.setSelectedIndex(1);
     }//GEN-LAST:event_iraproductosActionPerformed
 
     private void irmateriaprimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irmateriaprimaActionPerformed
-punto_venta = new javax.swing.JPanel();
-puntodeventa.setSelectedIndex(2);
+        punto_venta = new javax.swing.JPanel();
+        puntodeventa.setSelectedIndex(2);
     }//GEN-LAST:event_irmateriaprimaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int elegido=listadatos.getSelectedIndex();
-        
-        
-        bgrupomm.add(rbmenoreo);
-        bgrupomm.add(rbmayoreo);
-        if(elegido==0){
-        descdeprod.setVisible(true);
-        descdeprod.setText("Cierre de Abrazadera\n" +
-        "Correa reversible de repuesto, viene con dos colores adicionales.\n" +
-        "Correa de agujeros con el material propuesto por Fiñax.\n" +
-        "Depende del tamaño, pero el estándar es reversible de 30 mm de ancho.\n" +
-        "Bordes cosidos para mayor durabilidad.\n" +
-        "El cinturón tiene la capacidad de medirse por medio del pliegue de la hebilla.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==1){
-        descdeprod.setVisible(true);
-        descdeprod.setText("Cierre de sin cierre\n" +
-            "Estructura: \n" +
-            "   8 ranuras para tarjetas. \n" +
-            "   Ventana de identificación. \n" +
-            "   Compartimentos para dinero.\n" +
-            "Tamaño aproximado: 11,4 x 8,9 x 1,7 cm.\n" +
-            "Multiusos.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==2){
-        descdeprod.setVisible(true);
-        descdeprod.setText("Cierre de Cremallera\n" +
-        "2 bolsillos laterales con cremallera y decoración.\n" +
-        "Cambiando el uso de piel, por producto Fiñax correa de hombro reforzada.\n" +
-        "1 compartimento medio, 1 bolsillo con cremallera y 2 bolsillos con ranura, 1 bolsillo trasero con cremallera.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==3){
-        descdeprod.setVisible(true);
-        descdeprod.setText("Los guantes están hechos de producto Fiñax en contraste a sus competidores, suaves y cómodos de llevar. \n" +
-        "Cuentan con tecnología nano conductora que permite que puedas usar tus aparatos electrónicos táctiles sin necesidad de quitarte los elegantes guantes.\n" +
-        "El diseño simple y clásico, es imprescindible durante el frío invierno, tanto en interiores como en exteriores.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==4){
-        descdeprod.setVisible(true);
-        descdeprod.setText("Recordemos que no está hecha a base de piel, o cuero, si no está hecha de Fiñax.\n" +
-        "Cremallera\n" +
-        "Cómodo y flocado en su interior.\n" +
-        "Características generales, puede pedir por personalizaciones: cintura alta, cierre de cremallera en la espalda, color sólido.\n" +
-        "Se recomienda tener cuidado al lavar.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==5){
-        descdeprod.setVisible(true);
-        descdeprod.setText("El zapato puede variar, pero el tamaño general es 100 mm o 120 mm.\n" +
-        "Cuenta con suela antiderrapante para evitar accidentes. \n" +
-        "Puede pedir un diseño personalizado.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==6){
-        descdeprod.setVisible(true);
-        descdeprod.setText("De nuevo cambiamos el uso de piel o cuero.\n" +
-        "6 paneles en la parte superior de Fiñax.\n" +
-        "Por dentro tiene una capa de algodón, este forro de algodón y el cinturón absorbente de sudor mantienen la cabeza seca y transpirable.\n" +
-        "No se lava a máquina y tener sumo cuidado al hacerlo.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-        if(elegido==7){
-        descdeprod.setVisible(true);
-        descdeprod.setText("Se pide, al igual que con los otros productos, lavar con cuidado a mano.\n" +
-        "Están hechos de Fiñax, de nuevo siendo un sustituto del cuero y piel, tela segura de alta calidad que ofrece una excelente experiencia de uso, suave, agradable al tacto y cómodo.\n" +
-        "Puede variar dependiendo de la personalización que el cliente guste darle, pero en general: Color sólido, cintura elástica, cintura alta, pierna recta.");
-        double precionormal=0;
-        double preciomasiva=0;
-        preciovalor.setText("$"+precionormal);
-        precioiva.setText("$"+preciomasiva);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void preciovalorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preciovalorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_preciovalorActionPerformed
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int elegido = listadatos.getSelectedIndex();
+        String ele=listadatos.getSelectedValue();
+        bgrupomm.add(rbmenoreo);
+        bgrupomm.add(rbmayoreo);
+        double preciomasiva = 0;
+        //proceso de ifentificacion
+        String va=cant.getText();
+        int vs = Integer.valueOf(va);
+        if (vs<=10 && rbmayoreo.isSelected()) {
+            JOptionPane.showMessageDialog(null, "SE HA CAMBIADO A VENTA POR MENOREO DEBIDO A LA CANTIDAD DE ARTICULOS QUE LLEVARÁ", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            rbmenoreo.setSelected(true);
+        }
+        if (vs>10 && rbmenoreo.isSelected()) {
+            JOptionPane.showMessageDialog(null, "SE HA CAMBIADO A VENTA POR MAYOREO DEBIDO A LA CANTIDAD DE ARTICULOS QUE LLEVARÁ", "Aviso!", JOptionPane.WARNING_MESSAGE);
+            rbmayoreo.setSelected(true);
+        }
+        if (elegido == 0) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("Cierre de Abrazadera\n"
+                    + "Correa reversible de repuesto, viene con dos colores adicionales.\n"
+                    + "Correa de agujeros con el material propuesto por Fiñax.\n"
+                    + "Depende del tamaño, pero el estándar es reversible de 30 mm de ancho.\n"
+                    + "Bordes cosidos para mayor durabilidad.\n"
+                    + "El cinturón tiene la capacidad de medirse por medio del pliegue de la hebilla.");
+            double precionormal = 359.00;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+             
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+                
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=280.92;
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 1) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("Cierre de sin cierre\n"
+                    + "Estructura: \n"
+                    + "8 ranuras para tarjetas. \n"
+                    + "Ventana de identificación. \n"
+                    + "Compartimentos para dinero.\n"
+                    + "Tamaño aproximado: 11,4 x 8,9 x 1,7 cm.\n"
+                    + "Multiusos.");
+            double precionormal = 131.93;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
 
-    private void rbmenoreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbmenoreoActionPerformed
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=90.00;
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 2) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("Cierre de Cremallera\n"
+                    + "2 bolsillos laterales con cremallera y decoración.\n"
+                    + "Cambiando el uso de piel, por producto Fiñax correa de hombro reforzada.\n"
+                    + "1 compartimento medio, 1 bolsillo con cremallera y 2 bolsillos con ranura, 1 bolsillo trasero con cremallera.");
+            double precionormal = 522.99;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal= 480.66;
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 3) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("Los guantes están hechos de producto Fiñax en contraste a sus competidores, suaves y cómodos de llevar. \n"
+                    + "Cuentan con tecnología nano conductora que permite que puedas usar tus aparatos electrónicos táctiles sin necesidad de quitarte los elegantes guantes.\n"
+                    + "El diseño simple y clásico, es imprescindible durante el frío invierno, tanto en interiores como en exteriores.");
+            double precionormal = 287.49;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=250.99;
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 4) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("Recordemos que no está hecha a base de piel, o cuero, si no está hecha de Fiñax.\n"
+                    + "Cremallera\n"
+                    + "Cómodo y flocado en su interior.\n"
+                    + "Características generales, puede pedir por personalizaciones: cintura alta, cierre de cremallera en la espalda, color sólido.\n"
+                    + "Se recomienda tener cuidado al lavar.");
+            double precionormal = 621.49;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=599.99;
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 5) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("El zapato puede variar, pero el tamaño general es 100 mm o 120 mm.\n"
+                    + "Cuenta con suela antiderrapante para evitar accidentes. \n"
+                    + "Puede pedir un diseño personalizado.");
+            double precionormal = 999.00;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=900.99;
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 6) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("De nuevo cambiamos el uso de piel o cuero.\n"
+                    + "6 paneles en la parte superior de Fiñax.\n"
+                    + "Por dentro tiene una capa de algodón, este forro de algodón y el cinturón absorbente de sudor mantienen la cabeza seca y transpirable.\n"
+                    + "No se lava a máquina y tener sumo cuidado al hacerlo.");
+            double precionormal = 527.81;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=499.67;
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        if (elegido == 7) {
+            descdeprod.setVisible(true);
+            descdeprod.setText("Se pide, al igual que con los otros productos, lavar con cuidado a mano.\n"
+                    + "Están hechos de Fiñax, de nuevo siendo un sustituto del cuero y piel, tela segura de alta calidad que ofrece una excelente experiencia de uso, suave, agradable al tacto y cómodo.\n"
+                    + "Puede variar dependiendo de la personalización que el cliente guste darle, pero en general: Color sólido, cintura elástica, cintura alta, pierna recta.");
+            double precionormal = 801.60;
+            double cantsel = 0;
+            if (rbmenoreo.isSelected()) {
+
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            else if(rbmayoreo.isSelected())
+            {
+                precionormal=777.90;
+                cantsel = precionormal * vs;
+                preciomasiva = cantsel * 1.16;
+            }
+            preciovalor.setText("$" + df.format(precionormal));
+            precioiva.setText("$" + df.format(preciomasiva));
+            cansel.setText("$" + df.format(cantsel));
+        }
+        Formulario.preciocarro=preciomasiva;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void canselActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canselActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbmenoreoActionPerformed
+    }//GEN-LAST:event_canselActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Carrito carro=new Carrito();
+        File archivocarro = new File("CARRITO.txt");
+        DefaultListModel modelo = new DefaultListModel();
+        modelo.addElement(listadatos.getSelectedValue());
+        System.out.println(listadatos.getSelectedValue());
+        try {
+            FileWriter escritor=new FileWriter(archivocarro,true);
+            escritor.write("\r\n");
+            escritor.write(listadatos.getSelectedValue()+"  $"+df.format(preciocarro)+"MXN.");
+            escritor.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR \n, Asegurese de tener suficiente espacio en el equipo o intente reiniciar el programa o el equipo para solucionar el problema", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void fechahoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechahoraActionPerformed
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        fechahora.setText(dtf.format(now));
+    }//GEN-LAST:event_fechahoraActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        punto_venta = new javax.swing.JPanel();
+        puntodeventa.setSelectedIndex(2);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        punto_venta = new javax.swing.JPanel();
+        puntodeventa.setSelectedIndex(1);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void metrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metrosActionPerformed
+        // materia prima
+    }//GEN-LAST:event_metrosActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Carrito carro=new Carrito();
+        carro.setVisible(true);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+//matria prima compra
+        String ms = metros.getText();
+        int mi=Integer.parseInt(ms);
+        double preciometro=68.00;
+        double pagarxm=0;
+        pagarxm=mi*preciometro;
+        String ar=Double.toString(pagarxm);
+        ajam.setText("Su importe por materia prima es de: ");
+        preciom.setText("$"+ar+" MXN.");
+    }//GEN-LAST:event_jButton6ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -444,18 +816,34 @@ puntodeventa.setSelectedIndex(2);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ajam;
     private javax.swing.ButtonGroup bgrupomm;
+    private javax.swing.JTextField cansel;
+    private javax.swing.JTextField cant;
     private javax.swing.JTextPane descdeprod;
-    private javax.swing.JLabel fechahora;
+    private javax.swing.JButton fechahora;
     private javax.swing.JButton iraproductos;
     private javax.swing.JButton irmateriaprima;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    public static javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -463,7 +851,10 @@ puntodeventa.setSelectedIndex(2);
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JList<String> listadatos;
     private javax.swing.JPanel materia_prima;
+    private javax.swing.JLabel medidor;
+    private javax.swing.JTextField metros;
     private javax.swing.JTextField precioiva;
+    private javax.swing.JLabel preciom;
     private javax.swing.JTextField preciovalor;
     private javax.swing.JPanel punto_venta;
     public javax.swing.JTabbedPane puntodeventa;
